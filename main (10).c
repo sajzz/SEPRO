@@ -4,7 +4,10 @@
 #define INFINITY 9999
 #define MAX 10
 
-int pathDJK[MAX]={-1};
+int pathDJK[MAX]={-1};//correct path from source to destination
+int RpathDJK[MAX]={-1};
+int weightDJK[MAX]={-1};//distance from node[i] to node[i+1] in weightDJK[i];
+int index;//no of nodes;
 
 
 
@@ -479,7 +482,7 @@ int dijkstra(int startnode,int targetNode)
     {
         for(j=0;j<n;j++)
         {
-            costEdge = findCost(i , j);
+            costEdge = findCost(i , j);//findCost() will find weight between ith and jth node;
             if(costEdge == 0)
             {
                 //printf("\nCostEdge value = 0\n");
@@ -584,15 +587,35 @@ int dijkstra(int startnode,int targetNode)
                 j=i;
                 do
                 {
+                    RpathDJK[k]=j;
+    			    k++;
                     j=pred[j];
                     pathDJK[k++]=j;
                     printf("<-%d",j);
                 }while(j!=startnode);
+                RpathDJK[k]=startnode;
             }
             
         }
     }
-    return ret;
+    int kr = k;
+    index = kr;
+    i=0;
+    while(k>=0)
+    {
+        pathDJK[i]=RpathDJK[k];
+        k--;
+        i++;
+    }
+    
+    i=0;
+    for(i=0;i<=kr-1;i++)
+	{
+	    weightDJK[i] = cost[pathDJK[i]][pathDJK[i+1]];
+	}
+    
+
+    return ret; // returns distance from source to destination;
 }
 
 
