@@ -619,6 +619,81 @@ int dijkstra(int startnode,int targetNode)
 }
 
 
+#include <stdio.h>
+#include<stdlib.h>
+#include<math.h>
+
+//#include "filename of Dijsktra's Algorithm.c"
+
+int speed_computation(int wt)
+{
+    int distance = wt;
+    int timer_of_signal,avg_speed_of_vehicles_in_traffic,length_of_traffic;
+    scanf("%d",&timer_of_signal);
+    scanf("%d",&avg_speed_of_vehicles_in_traffic);
+    scanf("%d",&length_of_traffic);
+    int time_taken_by_vehicles_to_clear = (length_of_traffic)/(avg_speed_of_vehicles_in_traffic);
+    int total_time = time_taken_by_vehicles_to_clear + timer_of_signal;
+    int speed = distance/total_time;
+    return speed;
+}
+
+
+int average_speed(int speed[])
+{
+    int speed_sum=0;
+    for(int i=0;i<index-1;i++)
+    {
+        speed_sum = speed_sum + speed[i];
+    }
+    int avg_speed = speed_sum/(index-1);
+    return avg_speed;
+}
+
+
+
+
+//prints speed 
+void Calc_Speed(int final_dest)
+{
+    int i = 0,j = 1;
+    int wt;
+    int src,dest;
+    int Total_time;
+    int speed_arr[MAX];
+    src = pathDJK[0];
+    dest = pathDJK[j];
+    
+    //speed for all edges except the final edge
+    while(dest != final_dest)
+    {
+        //store speed on each edge in speed_arr[]
+	wt = weightDKJ[i];
+        speed_arr[i] = speed = speed_computation(wt);
+	Total_time += wt/speed;
+        printf("From %d to %d\nDriving speed = %d\n",src,dest,speed);
+        j++;
+        src = dest;
+        dest = pathDJK[j];
+        i++;
+    }
+    
+    //Calculate speed for last edge
+    // and total time stored in variable total_time 
+    speed = average_speed(speed_arr); 
+    wt = weightDJK[i];
+    Total_time += speed/wt
+    printf("From %d to %d\nDriving speed = %d\n",src,dest,speed);
+    
+    printf("Total Journey time = %d\n",Total_time);
+    
+    
+}
+
+
+
+
+
 int main()
 {
     
