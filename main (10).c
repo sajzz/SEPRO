@@ -619,9 +619,7 @@ int dijkstra(int startnode,int targetNode)
 }
 
 
-#include <stdio.h>
-#include<stdlib.h>
-#include<math.h>
+
 
 //#include "filename of Dijsktra's Algorithm.c"
 
