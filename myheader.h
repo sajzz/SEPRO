@@ -4,8 +4,11 @@
 #define INFINITY 9999
 #define MAX 10
 
-int pathDJK[MAX]={-1};
-
+int pathDJK[MAX]={-1};//correct path from source to destination
+int RpathDJK[MAX]={-1};
+int weightDJK[MAX]={-1};//distance from node[i] to node[i+1] in weightDJK[i];
+int indexi;//no of nodes;
+int speed;
 
 
 typedef struct hor_graph
@@ -682,14 +685,101 @@ int dijkstra(int startnode,int targetNode)
                 j=i;
                 do
                 {
+                    RpathDJK[k]=j;
+    			    k++;
                     j=pred[j];
                     pathDJK[k++]=j;
                     printf("<-%d",j);
                 }while(j!=startnode);
+                 RpathDJK[k]=startnode;
             }
 
         }
     }
-    return ret;
+    int kr = k;
+    indexi = kr;
+    i=0;
+    while(k>=0)
+    {
+        pathDJK[i]=RpathDJK[k];
+        k--;
+        i++;
+    }
+    
+    i=0;
+    for(i=0;i<=kr-1;i++)
+	{
+	    weightDJK[i] = cost[pathDJK[i]][pathDJK[i+1]];
+	}
+    
+
+    return ret; // returns distance from source to destination;
 }
 
+//#include "filename of Dijsktra's Algorithm.c"
+
+int speed_computation(int wt)
+{
+    int distance = wt;
+    int timer_of_signal,avg_speed_of_vehicles_in_traffic,length_of_traffic;
+    scanf("%d",&timer_of_signal);
+    scanf("%d",&avg_speed_of_vehicles_in_traffic);
+    scanf("%d",&length_of_traffic);
+    int time_taken_by_vehicles_to_clear = (length_of_traffic)/(avg_speed_of_vehicles_in_traffic);
+    int total_time = time_taken_by_vehicles_to_clear + timer_of_signal;
+    int speed = distance/total_time;
+    return speed;
+}
+
+
+int average_speed(int speed[])
+{
+    int speed_sum=0;
+    for(int i=0;i<indexi-1;i++)
+    {
+        speed_sum = speed_sum + speed[i];
+    }
+    int avg_speed = speed_sum/(indexi-1);
+    return avg_speed;
+}
+
+
+
+
+//prints speed 
+void Calc_Speed(int final_dest)
+{
+    int i = 0,j = 1;
+    int wt;
+    int src,dest;
+    int Total_time;
+    int speed_arr[MAX];
+    src = pathDJK[0];
+    dest = pathDJK[j];
+    
+    //speed for all edges except the final edge
+    while(dest != final_dest)
+    {
+        //store speed on each edge in speed_arr[]
+	wt = weightDJK[i];
+	speed = speed_computation(wt);
+    speed_arr[i] = speed;
+	Total_time += wt/speed;
+        printf("From %d to %d\nDriving speed = %d\n",src,dest,speed);
+        j++;
+        src = dest;
+        dest = pathDJK[j];
+        i++;
+    }
+    
+    //Calculate speed for last edge
+    // and total time stored in variable total_time 
+    speed = average_speed(speed_arr); 
+    wt = weightDJK[i];
+    Total_time += speed/wt;
+    printf("From %d to %d\nDriving speed = %d\n",src,dest,speed);
+    
+    printf("Total Journey time = %d\n",Total_time);
+    
+    
+}
