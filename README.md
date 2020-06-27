@@ -29,3 +29,8 @@ main(10).c:-
 changes made in code 
 1) added weightDKJ[] array to get weight of nodes in shortest path.
 2) index variable to get total no. of nodes in shortest path.(in case to use in for loop,etc.)
+
+
+
+dated:-27 Jun 2020,(14:42)
+Aman and Shantanu, yours 3 functions are added and errors are solved,Now a run of complete code is required.
